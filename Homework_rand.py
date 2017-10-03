@@ -1,6 +1,4 @@
-# n = int(input('Enter the number of command:'))
 commands = input().split()
-n = len(commands)
 import random
 class game:
 	win = 0
@@ -10,12 +8,10 @@ class game:
 	skip = 0
 	score = 0
 result = {}
-for i in range(n):
-	for j in range(i + 1, n):
-			if result.get(commands[i]) == None:
-				result[commands[i]] = game()
-			if result.get(commands[j]) == None:
-				result[commands[j]] = game()
+for i in range(len(commands)):
+	for j in range(i + 1, len(commands)):
+			if result.get(commands[i]) == None: result[commands[i]] = game()
+			if result.get(commands[j]) == None: result[commands[j]] = game()
 			r = random.randint(0,6)
 			result[commands[i]].goal += r
 			result[commands[j]].goal += 6 - r
@@ -34,14 +30,12 @@ for i in range(n):
 				result[commands[i]].win += 1
 				result[commands[i]].score += 3
 				result[commands[j]].fail += 1
-arrscore = []
-for value in result.values():
-	arrscore.append(value.score)
+arrscore = [value.score for value in result.values()]
 arrscore = list(set(arrscore))
 arrscore.sort()
 arrscore.reverse()
 for i in arrscore:
 	for keys, values in result.items():
 		if i == values.score:
-			print (keys,'\t', n - 1, '\t', values.win, '\t',
+			print (keys,'\t', len(commands) - 1, '\t', values.win, '\t',
 			values.draw, '\t', values.fail, '\t', values.goal, '\t', values.skip, '\t', i)
